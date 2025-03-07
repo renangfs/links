@@ -6,8 +6,7 @@ export default function Index(){
     return(
         <View style={styles.container}>
             <Text style={styles.Title}>Hello </Text>
-            <Text style={styles.Title}>React  Native!</Text>
-            <Text style={styles.Title}>Hello </Text>
+            <Text style={styles.Title}>Renan Germano</Text>
         </View>
         )
 
