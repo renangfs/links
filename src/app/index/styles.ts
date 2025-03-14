@@ -5,7 +5,7 @@ import { colors } from "@/styles/colors"
 export const styles =StyleSheet.create({
     container:{
         flex: 1,
-        paddingTop: 10,//Consultar o valor no video
+        paddingTop: 20,//Consultar o valor no video
         //justifyContent: "center",
         //alignItems: "center",
         //flexDirection: "row",
