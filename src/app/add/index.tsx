@@ -9,6 +9,7 @@ import { colors } from '@/styles/colors'
 import { Categories } from "@/components/categories"
 import { Input } from "@/components/input"
 import { Button } from "@/components/Button"
+import { linkStorage } from "@/storage/link-storage";
 
 
 export default function Add(){
@@ -16,17 +17,36 @@ export default function Add(){
     const [name,setName] = useState("")
     const [url,setUrl] = useState("")
 
-    function handleAdd(){
-        if(!category){
-            return Alert.alert("Categoria","Selecione a categoria")
+    async function handleAdd(){
+        try{
+            if(!category){
+                return Alert.alert("Categoria","Selecione a categoria")
+            }
+            if(!name.trim){
+                return Alert.alert("Categoria","insira um nome")
+            }
+            if(!url.trim){
+                return Alert.alert("Categoria","insira um link")
+            }
+            
+            await linkStorage.save({
+                id: new Date().getTime().toString(),
+                name,
+                url,
+                category
+            })
+            Alert.alert("Sucesso","Novo link adicionado",[
+                {
+                text: "OK",
+                onPress: () => router.back(),
+                },
+        ])
+            //const data = await linkStorage.get()
+            //console.log(data)
+
+        }catch (error){
+            Alert.alert("Erro","Não foi possível salvar o link")
         }
-        if(!name.trim){
-            return Alert.alert("Categoria","insira um nome")
-        }
-        if(!url.trim){
-            return Alert.alert("Categoria","insira um link")
-        }
-        console.log({category, name, url})
     }
 
     return(
@@ -43,8 +63,16 @@ export default function Add(){
    
             
             <View style={styles.form}>
-                <Input placeholder="Nome" onChangeText={(setName)} autoCorrect={false}/>
-                <Input placeholder="URL" onChangeText={(setUrl)} autoCorrect={false}/>
+                <Input 
+                    placeholder="Nome" 
+                    onChangeText={(setName)} 
+                    autoCorrect={false}/>
+                <Input 
+                    placeholder="URL"
+                    onChangeText={(setUrl)} 
+                    autoCorrect={false}
+                    autoCapitalize="none"//Não deixa a letra em maiusculo?
+                    />
                 <Button title="Adicionar" onPress={handleAdd}/>
             </View>
             
